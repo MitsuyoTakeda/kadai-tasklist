@@ -63,6 +63,13 @@ public class Index extends HttpServlet {
         request.setAttribute("tasks_count", tasks_count);
         request.setAttribute("page", page);
 
+        // フラッシュメッセージがセッションスコープにセットされていたら
+        // リクエストスコープに保存＋セッションスコープのフラッシュメッセージを削除
+        if(request.getSession().getAttribute("flush") != null){
+            request.setAttribute("flush", request.getSession().getAttribute("flush"));
+            request.getSession().removeAttribute("flush");
+        }
+
         RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/views/tasks/index.jsp");
         rd.forward(request, response);
 

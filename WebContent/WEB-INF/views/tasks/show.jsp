@@ -5,7 +5,7 @@
 <c:import url="../layout/app.jsp" >
     <c:param name="content">
         <c:choose>
-            <c:when test="${tasks != null }">
+            <c:when test="${tasks != null}">
                 <table>
                     <tbody>
                         <tr>
