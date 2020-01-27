@@ -8,9 +8,9 @@
         </form>
 
         <a href="${pageContext.request.contextPath}/index">一覧に戻る</a>
-        <a href="#" onclick="confirmDestrory();">タスクを削除</a>
+        <a href="#" onclick="confirmDestroy();">タスクを削除</a>
         <form method="POST" action="${pageContext.request.contextPath }/destroy">
-            <imput type="hidden" name="_token" value="${tasks.id }" />
+            <input type="hidden" name="_token" value="${_token }" />
         </form>
 
         <script>
