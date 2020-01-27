@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Timestamp;
 
 import javax.persistence.EntityManager;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import models.Task;
+import models.validators.TaskValidator;
 import util.DBUtil;
 
 /**
@@ -47,6 +49,23 @@ public class Update extends HttpServlet {
 
             Timestamp update_at = new Timestamp(System.currentTimeMillis());
             task.setUpdate_at(update_at);
+
+            // バリデーションを実行してエラーがあったら更新登録に戻す
+            String error = TaskValidator.validate(task);
+
+            if(error != null){
+                em.close();
+
+                // フォームに初期値を設定、更にエラーメッセージを送る
+                request.setAttribute("_token", request.getSession().getId());
+                request.setAttribute("tasks", task);
+                request.setAttribute("error", error);
+
+                RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/views/tasks/edit.jsp");
+                rd.forward(request, response);
+
+            }
+
 
             // データベース更新
             em.getTransaction().begin();

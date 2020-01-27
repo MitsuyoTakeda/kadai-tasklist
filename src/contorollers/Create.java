@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Timestamp;
 
 import javax.persistence.EntityManager;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import models.Task;
+import models.validators.TaskValidator;
 import util.DBUtil;
 
 /**
@@ -48,16 +50,32 @@ public class Create extends HttpServlet {
             task.setCreated_at(currentTime);
             task.setUpdate_at(currentTime);
 
-            // データベースへ保存
-            em.getTransaction().begin();
-            em.persist(task);
-            em.getTransaction().commit();
-            request.getSession().setAttribute("flush", "登録が完了しました");
-            em.close();
+            // バリデーションを実行してエラーがあったら新規登録の画面に戻す
+            String error = TaskValidator.validate(task);
+            if(error != null){
+                em.close();
 
-            // リダイレクト処理
-            response.sendRedirect(request.getContextPath() + "/index");
+                // フォームに初期値を設定、更にエラーメッセージを送る
+                request.setAttribute("_token", request.getSession().getId());
+                request.setAttribute("tasks", task);
+                request.setAttribute("error", error);
 
+                RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/views/tasks/new.jsp");
+                rd.forward(request, response);
+
+            } else{
+
+                // データベースへ保存
+                em.getTransaction().begin();
+                em.persist(task);
+                em.getTransaction().commit();
+                request.getSession().setAttribute("flush", "登録が完了しました");
+                em.close();
+
+                // リダイレクト処理
+                response.sendRedirect(request.getContextPath() + "/index");
+
+            }
         }
     }
 
