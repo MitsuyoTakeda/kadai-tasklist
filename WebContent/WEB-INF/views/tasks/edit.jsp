@@ -3,23 +3,30 @@
 
 <c:import url="../layout/app.jsp">
     <c:param name="content">
-        <form method="POST" action="${pageContext.request.contextPath}/update">
-            <c:import url="_form.jsp" />
-        </form>
+        <c:choose>
+            <c:when test="${tasks } != null">
+                <form method="POST" action="${pageContext.request.contextPath}/update">
+                    <c:import url="_form.jsp" />
+                </form>
 
-        <a href="${pageContext.request.contextPath}/index">一覧に戻る</a>
-        <a href="#" onclick="confirmDestroy();">タスクを削除</a>
-        <form method="POST" action="${pageContext.request.contextPath }/destroy">
-            <input type="hidden" name="_token" value="${_token }" />
-        </form>
+                <a href="${pageContext.request.contextPath}/index">一覧に戻る</a>
+                <a href="#" onclick="confirmDestroy();">タスクを削除</a>
+                <form method="POST" action="${pageContext.request.contextPath }/destroy">
+                    <input type="hidden" name="_token" value="${_token }" />
+                </form>
 
-        <script>
-            function confirmDestroy(){
-                if(confirm("本当に削除してよろしいですか？")){
-                    document.forms[1].submit();
-                }
-            }
+                <script>
+                    function confirmDestroy(){
+                        if(confirm("本当に削除してよろしいですか？")){
+                            document.forms[1].submit();
+                        }
+                    }
 
-        </script>
+                </script>
+            </c:when>
+            <c:otherwise>
+                お探しのデータは見つかりませんでした。
+            </c:otherwise>
+        </c:choose>
     </c:param>
 </c:import>
