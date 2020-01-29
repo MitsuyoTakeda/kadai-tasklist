@@ -23,19 +23,22 @@
                         <tr>
                             <th>作成日時</th>
                             <td>
-                                <fmt:formatDate value="${tasks.created_at }" pattern="yyyy-MM-dd hh:mm:ss" />
+                                <fmt:formatDate value="${tasks.created_at }" pattern="yyyy/MM/dd hh:mm:ss" />
                             </td>
                         </tr>
                         <tr>
                             <th>更新日時</th>
                             <td>
-                                <fmt:formatDate value="${tasks.update_at }" pattern="yyyy-MM-dd hh:mm:ss"/>
+                                <fmt:formatDate value="${tasks.update_at }" pattern="yyyy/MM/dd hh:mm:ss"/>
                             </td>
                         </tr>
                     </tbody>
                 </table>
-                <a href="${pageContext.request.contextPath}/edit?id=${tasks.id }">このタスクを編集</a>
-                <a href="${pageContext.request.contextPath}/index">一覧に戻る</a>
+
+                <div id="change_page">
+                    <a href="${pageContext.request.contextPath}/edit?id=${tasks.id }">編集</a>&nbsp&nbsp&nbsp&nbsp&nbsp
+                    <a href="${pageContext.request.contextPath}/index">一覧に戻る</a>
+                </div>
             </c:when>
             <c:otherwise>
                 お探しのデータは見つかりませんでした。

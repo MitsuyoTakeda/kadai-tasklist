@@ -9,11 +9,13 @@
                     <c:import url="_form.jsp" />
                 </form>
 
-                <a href="${pageContext.request.contextPath}/index">一覧に戻る</a>
-                <a href="#" onclick="confirmDestroy();">タスクを削除</a>
-                <form method="POST" action="${pageContext.request.contextPath }/destroy">
-                    <input type="hidden" name="_token" value="${_token }" />
-                </form>
+                <div id="change_page">
+                    <a href="${pageContext.request.contextPath}/index">一覧に戻る</a>&nbsp&nbsp&nbsp&nbsp&nbsp
+                    <a href="#" onclick="confirmDestroy();">削除</a>
+                    <form method="POST" action="${pageContext.request.contextPath }/destroy">
+                        <input type="hidden" name="_token" value="${_token }" />
+                    </form>
+                </div>
 
                 <script>
                     function confirmDestroy(){

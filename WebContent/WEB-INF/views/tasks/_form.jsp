@@ -5,12 +5,19 @@
         <c:out value="${error }" />
     </div>
 </c:if>
-
-<label for = "content">タスク内容</label>
-<input type = "text" name = "content" value="${tasks.content }" />
-
-<br/><br/>
-
-
-<input type = "hidden" name = "_token" value = "${_token }" />
-<button type = "submit">投稿</button>
+<table>
+    <tbody>
+        <tr>
+            <td id="column_width">
+                <label for="content">タスク内容</label>
+            </td>
+            <td>
+                <input type="text" name="content" value="${tasks.content }" id="textwidth"/>
+            </td>
+            <td id="column_width">
+                <input type = "hidden" name = "_token" value = "${_token }" />
+                <button type = "submit">投稿</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
